@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        for settings_helper in /usr/lib/*/gxde-wayland-gtk-menu/update-gtk-settings; do
+            if [ -x "$settings_helper" ]; then
+                if ! "$settings_helper" enable; then
+                    echo "warning: could not enable appmenu GTK module automatically" >&2
+                fi
+                break
+            fi
+        done
+        ;;
+esac
+
+#DEBHELPER#

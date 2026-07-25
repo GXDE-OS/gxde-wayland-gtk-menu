@@ -1,84 +1,52 @@
-PoC: GTK global menu on Plasma Wayland
+# GXDE Wayland GTK Menu
 
-### dependencies
+GTK 3 global menu module for the GXDE Wayland session. It exports GTK menu
+information through D-Bus and associates it with Wayland surfaces through the
+KDE appmenu protocol.
 
-- libdbusmenu-gtk3
+This project supports GTK 3 only. GTK 2 has no native Wayland backend, and
+GTK 4 no longer provides the menu widget and module interfaces used by this
+implementation.
 
-### build instruction
+## Dependencies
+
+- CMake 3.31 or later
+- pkgconf
+- GTK 3 development files
+- Wayland development files
+- X11 development files
+
+The required libdbusmenu sources are vendored in this repository.
+
+## Build
 
 ```console
-$ mkdir build
-$ cmake -B build .
+$ cmake -S . -B build
 $ cmake --build build
 ```
 
-### run the tester
+## Run the tester
 
 ```console
 $ GTK_MODULES=$PWD/build/libappmenu-gtk-module-wayland.so ./build/unity-gtk-menu-tester
 ```
 
----
-Application Menu GTK+ Module
----
+## Build the Debian package
 
-This is renamed port of [Launchpad repository](https://launchpad.net/unity-gtk-module) of Unity GTK+ Module.
+Install the dependencies listed in `debian/control`, then run:
 
-Unity GTK+ Module is small GTK Module than strips menus from all GTK programs, converts to MenuModel and send to AppMenu.
-Ubuntu users now does not need to install this.
-
-**REQUIRED DEPENDENCES**
-
-*All:*
- * GLib (>= 2.50.0)
- * GTK+ (>= 3.22.0)
-
-*GTK2 Support*
- * GTK+ (>= 2.24.0)
-
-*Demos*
- * valac (>= 0.24.0)
- 
----
-Usage Instructions
----
-**XFCE**
-- Type following into your console:
-`xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"`
-
-**BUDGIE***
-- Type following into your console:
-`gsettings set org.gnome.settings-daemon.plugins.xsettings enabled-gtk-modules "['appmenu-gtk-module']"`
-
-**OTHER**
-- Create file .gtkrc-2.0 into your home directory, if it do not exists already
-    - Add to this file `gtk-modules="appmenu-gtk-module"`
-- Create file .config/gtk-3.0/settings.ini into your home directory, if it do not exists already
-Add to this file:
-    - If it is just created, `[Settings]`
-    - And then ``gtk-modules="appmenu-gtk-module"``
-
-**IF ABOVE DOES NOT WORK**
-* Add to .profile or .bashrc:
-
-```sh
-if [ -n "$GTK_MODULES" ]; then
-    GTK_MODULES="${GTK_MODULES}:appmenu-gtk-module"
-else
-    GTK_MODULES="appmenu-gtk-module"
-fi
-
-if [ -z "$UBUNTU_MENUPROXY" ]; then
-    UBUNTU_MENUPROXY=1
-fi
-
-export GTK_MODULES
-export UBUNTU_MENUPROXY
+```console
+$ dpkg-buildpackage --no-sign --build=binary
 ```
 
-**IF NONE OF THESE ARE WORKING**
-* Add above snippet to any place where environment variables should set.
+When the package is installed, its maintainer script adds
+`appmenu-gtk-module-wayland` to the `gtk-modules` list in
+`/etc/gtk-3.0/settings.ini`. Existing settings and GTK modules are retained.
+Removing the package removes only this module from the list.
 
-**YOU SHOULD RELOGIN AFTER INSTALLING THIS MODULE FIRST TIME**
+Log out and back in after the first installation. The module can also be
+loaded explicitly for one application:
 
-
+```console
+$ GTK_MODULES=appmenu-gtk-module-wayland your-gtk3-application
+```

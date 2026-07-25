@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.31)
 project(appmenu-gtk-module-wayland VERSION 0.1.0 LANGUAGES C)
 
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLIB REQUIRED IMPORTED_TARGET glib-2.0)
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(WAYLAND_CLIENT REQUIRED IMPORTED_TARGET wayland-client)
 pkg_check_modules(X11 REQUIRED IMPORTED_TARGET x11)
@@ -40,6 +41,13 @@ target_link_libraries(appmenu-gtk-module-wayland
 install(
     TARGETS appmenu-gtk-module-wayland
     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/gtk-3.0/modules"
+)
+
+add_executable(update-gtk-settings tools/update-gtk-settings.c)
+target_link_libraries(update-gtk-settings PkgConfig::GLIB)
+install(
+    TARGETS update-gtk-settings
+    RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}/gxde-wayland-gtk-menu"
 )
 
 if(BUILD_TESTING)

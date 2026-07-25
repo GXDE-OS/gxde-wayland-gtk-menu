@@ -5,6 +5,7 @@ Maintainer: CharOfString <root@charofstring.cc>
 Build-Depends:
  cmake (>= 3.31),
  debhelper-compat (= 13),
+ libglib2.0-dev,
  libgtk-3-dev,
  libwayland-dev,
  libx11-dev,
@@ -15,7 +16,6 @@ Rules-Requires-Root: no
 
 Package: gxde-wayland-gtk-menu
 Architecture: any
-Multi-Arch: same
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},

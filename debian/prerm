@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    remove|deconfigure)
+        for settings_helper in /usr/lib/*/gxde-wayland-gtk-menu/update-gtk-settings; do
+            if [ -x "$settings_helper" ]; then
+                if ! "$settings_helper" disable; then
+                    echo "warning: could not remove appmenu GTK module from GTK settings" >&2
+                fi
+                break
+            fi
+        done
+        ;;
+esac
+
+#DEBHELPER#
