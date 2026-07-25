@@ -1,0 +1,24 @@
+Source: gxde-wayland-gtk-menu
+Section: x11
+Priority: optional
+Maintainer: CharOfString <root@charofstring.cc>
+Build-Depends:
+ cmake (>= 3.31),
+ debhelper-compat (= 13),
+ libgtk-3-dev,
+ libwayland-dev,
+ libx11-dev,
+ pkgconf,
+Standards-Version: 4.7.2
+Homepage: https://github.com/GXDE-OS/gxde-wayland-gtk-menu
+Rules-Requires-Root: no
+
+Package: gxde-wayland-gtk-menu
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: GTK 3 global menu module for GXDE Wayland Session.
+ This is a port of rocka/appmenu-gtk-module-wayland, which exports GTK3's global
+ menu to Wayland compositors.

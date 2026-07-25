@@ -1,0 +1,7 @@
+gxde-wayland-gtk-menu (0.9.0-gxde1) unstable; urgency=medium
+
+  * Packed the package for GXDE OS.
+  * Vendored libdbusmenu for easier CI process.
+  * Auto installs of GTK3 module after package installed.
+
+ -- CharOfString <root@charofstring.cc>  Sat, 25 Jul 2026 16:46:03 +0800

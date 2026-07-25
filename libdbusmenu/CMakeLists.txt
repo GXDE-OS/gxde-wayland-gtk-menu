@@ -49,7 +49,7 @@ set(HEADERS_GLIB
 	"${SRC_GLIB}/client.h"
 )
 
-add_library(dbusmenu-glib SHARED
+add_library(dbusmenu-glib STATIC
 	"${SRC_GLIB}/dbus-menu-clean.xml.c"
 	"${SRC_GLIB}/defaults.c"
 	"${SRC_GLIB}/enum-types.c"
