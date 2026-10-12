@@ -1,0 +1,33 @@
+# Maintainer: CharOfString <root@charofstring.cc>
+pkgname=gxde-wayland-gtk-menu-git
+pkgver=0.9.0
+pkgrel=1
+pkgdesc='GTK 3 global menu module for the GXDE Wayland session'
+arch=('x86_64' 'aarch64')
+url="https://github.com/GXDE-OS/gxde-wayland-gtk-menu"
+license=('LGPL-3.0-or-later')
+depends=('gtk3' 'glib2' 'wayland' 'libx11' 'glibc')
+makedepends=('git' 'cmake' 'ninja')
+provides=('gxde-wayland-gtk-menu')
+conflicts=('gxde-wayland-gtk-menu')
+source=()
+sha512sums=()
+
+# 直接使用 PKGBUILD 所在的 git 仓库作为源码 ・ Build from the git checkout this PKGBUILD lives in.
+_srcroot() {
+  git -C "$startdir" rev-parse --show-toplevel
+}
+
+build() {
+  # 与 debian/rules 相同 ・ Same as debian/rules.
+  cmake -B build -S "$(_srcroot)" -GNinja \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DBUILD_TESTING=OFF
+  ninja -C build
+}
+
+package() {
+  DESTDIR="$pkgdir" ninja -C build install
+}
