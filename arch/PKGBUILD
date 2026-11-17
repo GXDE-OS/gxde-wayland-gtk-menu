@@ -1,5 +1,5 @@
 # Maintainer: CharOfString <root@charofstring.cc>
-pkgname=gxde-wayland-gtk-menu-git
+pkgname=gxde-wayland-gtk-menu
 pkgver=0.9.0
 pkgrel=1
 pkgdesc='GTK 3 global menu module for the GXDE Wayland session'
@@ -8,8 +8,9 @@ url="https://github.com/GXDE-OS/gxde-wayland-gtk-menu"
 license=('LGPL-3.0-or-later')
 depends=('gtk3' 'glib2' 'wayland' 'libx11' 'glibc')
 makedepends=('git' 'cmake' 'ninja')
-provides=('gxde-wayland-gtk-menu')
-conflicts=('gxde-wayland-gtk-menu')
+provides=("gxde-wayland-gtk-menu-git=$pkgver")
+conflicts=('gxde-wayland-gtk-menu-git')
+replaces=('gxde-wayland-gtk-menu-git')
 source=()
 sha512sums=()
 
